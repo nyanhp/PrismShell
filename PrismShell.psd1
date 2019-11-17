@@ -3,7 +3,7 @@
 	RootModule          = 'PrismShell.psm1'
 
 	# Version number of this module.
-	ModuleVersion       = '1.1.1'
+	ModuleVersion       = '1.2.0'
 
 	# ID used to uniquely identify this module
 	GUID                = '591c2651-a50b-4d31-9398-7031bf9ae7da'
@@ -26,7 +26,7 @@
 	CompatiblePSEditions = @('Core', 'Desktop')
 
 	# Functions to export from this module
-	FunctionsToExport   = 'Add-PrismProfile','Get-PrismFile','Get-PrismProfile','Get-PrismStatus','New-PrismProfile','New-PrismSession','readme','Remove-PrismFile','Start-PrismPrint'
+	FunctionsToExport   = 'Add-PrismProfile','Get-PrismFile','Get-PrismProfile','Get-PrismStatus','New-PrismProfile','New-PrismSession','readme','Remove-PrismFile','Start-PrismPrint', 'Suspend-PrismPrint', 'Resume-PrismPrint', 'Stop-PrismPrint'
 
 	# Cmdlets to export from this module
 	CmdletsToExport     = ''
