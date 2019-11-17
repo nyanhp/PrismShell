@@ -6,6 +6,9 @@ Get it on the PowerShell gallery or clone it from here. This module allows you t
 Install-Module PrismShell -Scope CurrentUser
 ```
 
+Your operating system should not matter. At the moment, I assume that the command ```arp -a``` can be executed. Should you require sudo privileges, start your
+pwsh with sudo. May be streamlined in a future release.
+
 ## Cmdlets
 
 ### Add-PrismProfile
