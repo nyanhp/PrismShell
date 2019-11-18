@@ -9,6 +9,10 @@
     The session to your Prism, autocreated if not provided
 .PARAMETER Index
     Integer-based index between 1 and 7 that you want to retrieve
+.EXAMPLE
+    Get-PrismProfile
+
+    List all profiles
 #>
 function Get-PrismProfile
 {

@@ -22,6 +22,10 @@
     The distance the build plate rises after each layer
 .PARAMETER Force
     Overwrite existing profiles
+.EXAMPLE
+    Add-PrismProfile -Index 4 -Material GoodStuff -BaseCureTime 70 -CureTime 3 -RaiseDistance 5
+
+    Adds a new profile to the default printer
 #>
 function Add-PrismProfile
 {
@@ -79,7 +83,7 @@ function Add-PrismProfile
 
     if ($null -ne (Get-PrismProfile -ComputerName $ComputerName -Session $Session -Index $Index) -and -not $Force.IsPresent)
     {
-        Stop-PSFFunction -String 'AddPrismProfile.ProfileExistsError' -StringValues $Index,$ComputerName 
+        Stop-PSFFunction -String 'AddPrismProfile.ProfileExistsError' -StringValues $Index,$ComputerName
     }
 
     if ($null -eq $PrismProfile)
@@ -94,5 +98,5 @@ function Add-PrismProfile
     $session.Headers.Add("Content-Type", "text/xml-external-parsed-entity")
     $session.Headers.Add("Accept-Encoding", "gzip, deflate")
     $session.Headers.Add("Accept-Language", "en-US,en;q=0.9")
-    $respondami = Invoke-RestMethod -Uri $uri -WebSession $session -Body $prismJson -Method Post
+    $null = Invoke-RestMethod -Uri $uri -WebSession $session -Body $prismJson -Method Post
 }

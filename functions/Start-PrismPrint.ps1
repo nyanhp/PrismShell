@@ -12,6 +12,10 @@
     The file name to print
 .PARAMETER Index
     The resin profile to print with, e.g. Get-PrismProfile
+.EXAMPLE
+    Start-PrismPrint -Index 2 -Name MAD5A.cddlp
+
+    Printer your awesome Marauder with your second profile
 #>
 function Start-PrismPrint
 {

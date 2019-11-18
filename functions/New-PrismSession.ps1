@@ -6,6 +6,12 @@
     serves as authentication
 .PARAMETER ComputerName
     The host name or IP of your Prism
+.PARAMETER MacAddress
+    The mac address of the printer
+.EXAMPLE
+    New-PrismSession
+
+    Create a new cookied-up web session to control your prism
 #>
 function New-PrismSession
 {

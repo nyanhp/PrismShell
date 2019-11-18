@@ -1,4 +1,16 @@
-﻿function Get-ArpCache
+﻿<#
+.SYNOPSIS
+    Get ARP cache entries
+.DESCRIPTION
+    Get ARP cache entries
+.PARAMETER ComputerName
+    The host name to get the specific entry for
+.EXAMPLE
+    Get-ArpCache -ComputerName prism.janhendrikpeter.de
+
+    Get the Prism in your domain...
+#>
+function Get-ArpCache
 {
     param
     (

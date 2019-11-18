@@ -3,6 +3,10 @@
     Disables auto-discovery
 .DESCRIPTION
     Disables printer auto-discovery
+.EXAMPLE
+    Disable-PrismAutodiscovery
+
+    Disables the auto discovery setting FOREVER
 #>
 function Disable-PrismAutodiscovery
 {

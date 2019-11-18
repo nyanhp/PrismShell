@@ -5,6 +5,10 @@
     Enable printer auto-discovery
 .PARAMETER DoNotUseFirstPrinter
     If not specified, the first discovered printer will be used.
+.EXAMPLE
+    Enable-PrismAutodiscovery
+
+    Configures two PSFramework settings to enable auto discovery FOREVER
 #>
 function Enable-PrismAutodiscovery
 {

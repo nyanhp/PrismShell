@@ -9,6 +9,10 @@
     The session to your Prism, autocreated if not provided
 .PARAMETER Name
     Filter the file list by name. Returns $null if the file does not exist
+.EXAMPLE
+    Get-PrismFile -Name MAD5A.cddlp
+
+    Try to locate your sliced Marauder II on your printer's SD card
 #>
 function Get-PrismFile
 {

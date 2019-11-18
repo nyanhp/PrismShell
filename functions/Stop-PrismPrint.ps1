@@ -7,6 +7,10 @@
     The host name or IP of your Prism
 .PARAMETER Session
     The session to your Prism, autocreated if not provided
+.EXAMPLE
+    Stop-PrismPrint
+
+    Cancels the current print on the default printer
 #>
 function Stop-PrismPrint
 {

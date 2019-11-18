@@ -9,6 +9,11 @@
     The session to your Prism, autocreated if not provided
 .PARAMETER Name
     The name of the file, can be piped from Get-PrismFile
+.EXAMPLE
+    Get-PrismFile -Name Daishi.cddlp | Remove-PrismFile
+
+    Checks if your awesome Daishi BattleMech model exists, and if it does, removes it. Shame on you :(
+    Unless you were making room for a Marauder...
 #>
 function Remove-PrismFile
 {

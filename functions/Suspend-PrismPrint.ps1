@@ -7,6 +7,10 @@
     The host name or IP of your Prism
 .PARAMETER Session
     The session to your Prism, autocreated if not provided
+.EXAMPLE
+    Suspend-PrismPrint
+
+    Pauses a running print
 #>
 function Suspend-PrismPrint
 {

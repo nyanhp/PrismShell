@@ -1,4 +1,14 @@
-﻿function Get-PrismPrinter
+﻿<#
+.SYNOPSIS
+    Discover all or the first/default printer
+.DESCRIPTION
+    Discover all or the first/default printer
+.EXAMPLE
+    Get-PrismPrinter
+
+    Lists 0-n Prisms
+#>
+function Get-PrismPrinter
 {
     [CmdletBinding()]
     param ( )
