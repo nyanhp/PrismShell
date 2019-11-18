@@ -28,9 +28,9 @@ function Add-PrismProfile
     [CmdletBinding()]
     param
     (
-        [Parameter(Mandatory)]
+        [Parameter()]
         [string]
-        $ComputerName,
+        $ComputerName = (Get-PrismPrinter),
 
         [Parameter()]
         [microsoft.powershell.commands.webrequestsession]
@@ -67,9 +67,9 @@ function Add-PrismProfile
 
     if (-not $Force.IsPresent)
     {
-        Write-Warning "Currently cannot add new profiles. Try to find out how it works and create a PR for github.com/nyanhp/prismshell"
-        return
+        Stop-PSFFunction -String AddPrismProfile.NotImplemented
     }
+
     $uri = "http://$ComputerName/resin{0}.conf" -f $Index
 
     if ($null -eq $Session)
@@ -79,8 +79,7 @@ function Add-PrismProfile
 
     if ($null -ne (Get-PrismProfile -ComputerName $ComputerName -Session $Session -Index $Index) -and -not $Force.IsPresent)
     {
-        Write-Error "Profile ID $Index already exists. Use -Force to overwrite."
-        continue
+        Stop-PSFFunction -String 'AddPrismProfile.ProfileExistsError' -StringValues $Index,$ComputerName 
     }
 
     if ($null -eq $PrismProfile)

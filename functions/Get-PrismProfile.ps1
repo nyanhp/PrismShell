@@ -15,9 +15,9 @@ function Get-PrismProfile
     [CmdletBinding()]
     param
     (
-        [Parameter(Mandatory)]
+        [Parameter()]
         [string]
-        $ComputerName,
+        $ComputerName = (Get-PrismPrinter),
 
         [Parameter()]
         [microsoft.powershell.commands.webrequestsession]
@@ -38,7 +38,11 @@ function Get-PrismProfile
 
     foreach ($i in (1..7))
     {
-        if ($Index -and $i -ne $Index) { continue }
+        if ($Index -and $i -ne $Index)
+        {
+            Write-PSFMessage -String 'GetPrismProfile.FilterIndex' -StringValues $ComputerName, $Index
+            continue
+        }
 
         $profileData = Invoke-RestMethod -Uri ($uri -f $i) -Method Get -WebSession $Session
         if ($profileData -is [System.String]) { continue }

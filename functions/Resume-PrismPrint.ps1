@@ -13,9 +13,9 @@ function Resume-PrismPrint
     [CmdletBinding()]
     param
     (
-        [Parameter(Mandatory)]
+        [Parameter()]
         [string]
-        $ComputerName,
+        $ComputerName = (Get-PrismPrinter),
 
         [Parameter()]
         [microsoft.powershell.commands.webrequestsession]
@@ -30,7 +30,7 @@ function Resume-PrismPrint
 
     if ((Get-PrismStatus -ComputerName $ComputerName -Session $Session).Status -in 'Idle','Unknown')
     {
-        Write-Warning -Message 'Not executing Resume. Printer is currently idle'
+        Write-PSFMessage -String 'ResumePrismPrint.NotResuming' -StringValues $ComputerName
     }
 
     Invoke-RestMethod -Uri $uri -Method Get -WebSession $Session

@@ -13,9 +13,9 @@ function Suspend-PrismPrint
     [CmdletBinding()]
     param
     (
-        [Parameter(Mandatory)]
+        [Parameter()]
         [string]
-        $ComputerName,
+        $ComputerName = (Get-PrismPrinter),
 
         [Parameter()]
         [microsoft.powershell.commands.webrequestsession]
@@ -30,8 +30,9 @@ function Suspend-PrismPrint
 
     if ((Get-PrismStatus -ComputerName $ComputerName -Session $Session).Status -in 'Idle','Unknown')
     {
-        Write-Warning -Message 'Not executing pause. Printer is currently idle'
+        Stop-PSFFunction -String 'SuspendPrismPrint.NotSuspending' -StringValues $ComputerName
     }
 
+    Write-PSFMessage -String 'SuspendPrismPrint.AttemptPause' -StringValues $ComputerName
     Invoke-RestMethod -Uri $uri -Method Get -WebSession $Session
 }

@@ -15,9 +15,9 @@ function Remove-PrismFile
     [CmdletBinding()]
     param
     (
-        [Parameter(Mandatory)]
+        [Parameter()]
         [string]
-        $ComputerName,
+        $ComputerName = (Get-PrismPrinter),
 
         [Parameter()]
         [microsoft.powershell.commands.webrequestsession]
@@ -39,6 +39,7 @@ function Remove-PrismFile
 
     process
     {
-        $null = Invoke-RestMethod -Uri ($uri -f $Name) -Method Get -WebSession $Session
+        Write-PSFMessage -String 'RemovePrismFile.Removing' -StringValues $ComputerName, $Name
+        $null = Invoke-RestMethod -Uri ($uri -f $Name) -Method Get -WebSession $Session -ErrorAction Stop
     }
 }

@@ -15,9 +15,9 @@ function Get-PrismFile
     [CmdletBinding()]
     param
     (
-        [Parameter(Mandatory)]
+        [Parameter()]
         [string]
-        $ComputerName,
+        $ComputerName = (Get-PrismPrinter),
 
         [Parameter()]
         [microsoft.powershell.commands.webrequestsession]
@@ -35,10 +35,12 @@ function Get-PrismFile
         $Session = New-PrismSession -ComputerName $ComputerName
     }
 
+    Write-PSFMessage -String 'GetPrismFile.DiscoveryStarted' -StringValues $ComputerName
     [System.IO.FileInfo[]]$files = (Invoke-RestMethod -Uri $uri -WebSession $session).Text
 
     if (-not [string]::IsNullOrWhiteSpace($Name))
     {
+        Write-PSFMessage -String 'GetPrismFile.FilterName' -StringValues $ComputerName, $Name
         return ($files | Where-Object Name -eq $Name)
     }
 
