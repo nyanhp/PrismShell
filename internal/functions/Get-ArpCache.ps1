@@ -14,7 +14,7 @@
 
     $cacheText = & (Get-Command -Name arp).Path --% -a
 
-    $cache = foreach ($entry in ($cacheText |Select-Object -Skip 3))
+    $cache = foreach ($entry in ($cacheText | Where-Object {$_ -match '^\s*\d'}))
     {
         $ip, $mac, $type = $entry.Trim() -split '\s+'
 
