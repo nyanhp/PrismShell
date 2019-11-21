@@ -37,10 +37,10 @@ foreach ($line in (Get-Content "$($PSScriptRoot)\filesBefore.txt" | Where-Object
 
 # Gather commands
 Write-PSFMessage -Level Important -Message "Finding functions"
-Get-ChildItem -Path "$($publishDir.FullName)\PrismShell\internal\functions\" -Recurse -File -Filter "*.ps1" | ForEach-Object {
+Get-ChildItem -Path "$($publishDir.FullName)\internal\functions\" -Recurse -File -Filter "*.ps1" | ForEach-Object {
 	$text += [System.IO.File]::ReadAllText($_.FullName)
 }
-Get-ChildItem -Path "$($publishDir.FullName)\PrismShell\functions\" -Recurse -File -Filter "*.ps1" | ForEach-Object {
+Get-ChildItem -Path "$($publishDir.FullName)\functions\" -Recurse -File -Filter "*.ps1" | ForEach-Object {
 	$text += [System.IO.File]::ReadAllText($_.FullName)
 }
 
@@ -64,10 +64,10 @@ foreach ($line in (Get-Content "$($PSScriptRoot)\filesAfter.txt" | Where-Object 
 
 #region Update the psm1 file
 Write-PSFMessage -Level Important -Message "Update PSM1"
-$fileData = Get-Content -Path "$($publishDir.FullName)\PrismShell\PrismShell.psm1" -Raw
+$fileData = Get-Content -Path "$($publishDir.FullName)\PrismShell.psm1" -Raw
 $fileData = $fileData.Replace('"<was not compiled>"', '"<was compiled>"')
 $fileData = $fileData.Replace('"<compile code into here>"', ($text -join "`n`n"))
-[System.IO.File]::WriteAllText("$($publishDir.FullName)\PrismShell\PrismShell.psm1", $fileData, [System.Text.Encoding]::UTF8)
+[System.IO.File]::WriteAllText("$($publishDir.FullName)\PrismShell.psm1", $fileData, [System.Text.Encoding]::UTF8)
 #endregion Update the psm1 file
 
 # Publish to Gallery
