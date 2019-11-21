@@ -64,4 +64,9 @@ class PrismProfile
         $this.CureTime = $CureTime
         $this.RaiseDistance = $RaiseDistance
     }
+
+    [string] ToString()
+    {
+        return ($this | ConvertTo-Json -Compress)
+    }
 }
