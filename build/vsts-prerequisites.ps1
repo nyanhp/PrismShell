@@ -1,4 +1,4 @@
-Install-PackageProvider -Name NuGet -Force
+﻿Install-PackageProvider -Name NuGet -Force
 
 $modules = @("Pester", "PSFramework", "PSScriptAnalyzer", "PowerShellGet")
 
