@@ -6,7 +6,7 @@ Insert any build steps you may need to take before publishing it here.
 #>
 param
 (
-	$WorkingDirectory = $env:SYSTEM_DEFAULTWORKINGDIRECTORY
+	$WorkingDirectory = (Resolve-Path "$PSScriptRoot\..").Path
 )
 
 # Prepare publish folder
