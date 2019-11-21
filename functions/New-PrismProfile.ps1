@@ -11,6 +11,10 @@
     Time in seconds for each layer
 .PARAMETER RaiseDistance
     The distance the build plate rises after each layer
+.EXAMPLE
+    New-PrismProfile -Material GoodStuff -BaseCureTime 70 -CureTime 3 -RaiseDistance 5
+
+    Generates a new profile object
 #>
 function New-PrismProfile
 {

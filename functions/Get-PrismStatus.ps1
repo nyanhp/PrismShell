@@ -7,14 +7,18 @@
     The host name or IP of your Prism
 .PARAMETER Session
     The session to your Prism, autocreated if not provided
+.EXAMPLE
+    Get-PrismStatus
+
+    Gets current printer status
 #>
 function Get-PrismStatus
 {
     param
     (
-        [Parameter(Mandatory)]
+        [Parameter()]
         [string]
-        $ComputerName,
+        $ComputerName = (Get-PrismPrinter),
 
         [Parameter()]
         [microsoft.powershell.commands.webrequestsession]

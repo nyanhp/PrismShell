@@ -22,15 +22,19 @@
     The distance the build plate rises after each layer
 .PARAMETER Force
     Overwrite existing profiles
+.EXAMPLE
+    Add-PrismProfile -Index 4 -Material GoodStuff -BaseCureTime 70 -CureTime 3 -RaiseDistance 5
+
+    Adds a new profile to the default printer
 #>
 function Add-PrismProfile
 {
     [CmdletBinding()]
     param
     (
-        [Parameter(Mandatory)]
+        [Parameter()]
         [string]
-        $ComputerName,
+        $ComputerName = (Get-PrismPrinter),
 
         [Parameter()]
         [microsoft.powershell.commands.webrequestsession]
@@ -67,9 +71,9 @@ function Add-PrismProfile
 
     if (-not $Force.IsPresent)
     {
-        Write-Warning "Currently cannot add new profiles. Try to find out how it works and create a PR for github.com/nyanhp/prismshell"
-        return
+        Stop-PSFFunction -String AddPrismProfile.NotImplemented
     }
+
     $uri = "http://$ComputerName/resin{0}.conf" -f $Index
 
     if ($null -eq $Session)
@@ -79,8 +83,7 @@ function Add-PrismProfile
 
     if ($null -ne (Get-PrismProfile -ComputerName $ComputerName -Session $Session -Index $Index) -and -not $Force.IsPresent)
     {
-        Write-Error "Profile ID $Index already exists. Use -Force to overwrite."
-        continue
+        Stop-PSFFunction -String 'AddPrismProfile.ProfileExistsError' -StringValues $Index,$ComputerName
     }
 
     if ($null -eq $PrismProfile)
@@ -89,11 +92,10 @@ function Add-PrismProfile
     }
 
     # This needs some work. Printer acknowledges with OK, but doesn't do it
-    $prismJson = ($PrismProfile | ConvertTo-Json -Compress)
     $session.Headers.Add("Content-Length", $prismJson.Length)
     $session.Headers.Add("X-Requested-With", "XMLHttpRequest")
     $session.Headers.Add("Content-Type", "text/xml-external-parsed-entity")
     $session.Headers.Add("Accept-Encoding", "gzip, deflate")
     $session.Headers.Add("Accept-Language", "en-US,en;q=0.9")
-    $respondami = Invoke-RestMethod -Uri $uri -WebSession $session -Body $prismJson -Method Post
+    $null = Invoke-RestMethod -Uri $uri -WebSession $session -Body $PrismProfile.ToString() -Method Post
 }

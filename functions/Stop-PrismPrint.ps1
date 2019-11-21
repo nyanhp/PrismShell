@@ -7,15 +7,19 @@
     The host name or IP of your Prism
 .PARAMETER Session
     The session to your Prism, autocreated if not provided
+.EXAMPLE
+    Stop-PrismPrint
+
+    Cancels the current print on the default printer
 #>
 function Stop-PrismPrint
 {
     [CmdletBinding()]
     param
     (
-        [Parameter(Mandatory)]
+        [Parameter()]
         [string]
-        $ComputerName,
+        $ComputerName = (Get-PrismPrinter),
 
         [Parameter()]
         [microsoft.powershell.commands.webrequestsession]
@@ -30,8 +34,9 @@ function Stop-PrismPrint
 
     if ((Get-PrismStatus -ComputerName $ComputerName -Session $Session).Status -in 'Idle','Unknown')
     {
-        Write-Warning -Message 'Not executing cancellation. Printer is currently idle'
+        Stop-PSFFunction -String 'StopPrismPrint.NotStopping' -StringValues $ComputerName
     }
 
+    Write-PSFMessage -String 'StopPrismPrint.AttemptStop' -StringValues $ComputerName
     Invoke-RestMethod -Uri $uri -Method Get -WebSession $Session
 }

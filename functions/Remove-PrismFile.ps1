@@ -9,15 +9,20 @@
     The session to your Prism, autocreated if not provided
 .PARAMETER Name
     The name of the file, can be piped from Get-PrismFile
+.EXAMPLE
+    Get-PrismFile -Name Daishi.cddlp | Remove-PrismFile
+
+    Checks if your awesome Daishi BattleMech model exists, and if it does, removes it. Shame on you :(
+    Unless you were making room for a Marauder...
 #>
 function Remove-PrismFile
 {
     [CmdletBinding()]
     param
     (
-        [Parameter(Mandatory)]
+        [Parameter()]
         [string]
-        $ComputerName,
+        $ComputerName = (Get-PrismPrinter),
 
         [Parameter()]
         [microsoft.powershell.commands.webrequestsession]
@@ -39,6 +44,7 @@ function Remove-PrismFile
 
     process
     {
-        $null = Invoke-RestMethod -Uri ($uri -f $Name) -Method Get -WebSession $Session
+        Write-PSFMessage -String 'RemovePrismFile.Removing' -StringValues $ComputerName, $Name
+        $null = Invoke-RestMethod -Uri ($uri -f $Name) -Method Get -WebSession $Session -ErrorAction Stop
     }
 }

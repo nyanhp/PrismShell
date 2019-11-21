@@ -12,15 +12,19 @@
     The file name to print
 .PARAMETER Index
     The resin profile to print with, e.g. Get-PrismProfile
+.EXAMPLE
+    Start-PrismPrint -Index 2 -Name MAD5A.cddlp
+
+    Printer your awesome Marauder with your second profile
 #>
 function Start-PrismPrint
 {
     [CmdletBinding()]
     param
     (
-        [Parameter(Mandatory)]
+        [Parameter()]
         [string]
-        $ComputerName,
+        $ComputerName = (Get-PrismPrinter),
 
         [Parameter()]
         [microsoft.powershell.commands.webrequestsession]
@@ -44,13 +48,14 @@ function Start-PrismPrint
 
     if ($null -eq (Get-PrismProfile -ComputerName $ComputerName -Session $Session -Index $Index))
     {
-        throw "Printer profile $Index does not exist. Try 'Get-PrismProfile' to see which profiles are available"
+        Stop-PSFFunction -String 'StartPrismPrint.ProfileMissing' -StringValues $ComputerName, $Index
     }
 
     if ($null -eq (Get-PrismFile -ComputerName $ComputerName -Session $Session -Name $Name))
     {
-        throw "File $Name does not exist on SD card. The following files were found: $((Get-PrismFile -ComputerName $ComputerName -Session $Session).Name -join ',')"
+        Stop-PSFFunction -String 'StartPrismPrint.FileNotFound' -StringValues $ComputerName, $Name, $((Get-PrismFile -ComputerName $ComputerName -Session $Session).Name -join ',')
     }
 
+    Write-PSFMessage -String 'StartPrismPrint.Starting' -StringValues $ComputerName, $Name, $Index
     $null = Invoke-RestMethod -Uri ($uri -f $Index, $Name) -Method Get -WebSession $Session
 }

@@ -7,15 +7,19 @@
     The host name or IP of your Prism
 .PARAMETER Session
     The session to your Prism, autocreated if not provided
+.EXAMPLE
+    Suspend-PrismPrint
+
+    Pauses a running print
 #>
 function Suspend-PrismPrint
 {
     [CmdletBinding()]
     param
     (
-        [Parameter(Mandatory)]
+        [Parameter()]
         [string]
-        $ComputerName,
+        $ComputerName = (Get-PrismPrinter),
 
         [Parameter()]
         [microsoft.powershell.commands.webrequestsession]
@@ -30,8 +34,9 @@ function Suspend-PrismPrint
 
     if ((Get-PrismStatus -ComputerName $ComputerName -Session $Session).Status -in 'Idle','Unknown')
     {
-        Write-Warning -Message 'Not executing pause. Printer is currently idle'
+        Stop-PSFFunction -String 'SuspendPrismPrint.NotSuspending' -StringValues $ComputerName
     }
 
+    Write-PSFMessage -String 'SuspendPrismPrint.AttemptPause' -StringValues $ComputerName
     Invoke-RestMethod -Uri $uri -Method Get -WebSession $Session
 }
