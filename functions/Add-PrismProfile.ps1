@@ -92,11 +92,10 @@ function Add-PrismProfile
     }
 
     # This needs some work. Printer acknowledges with OK, but doesn't do it
-    $prismJson = ($PrismProfile | ConvertTo-Json -Compress)
     $session.Headers.Add("Content-Length", $prismJson.Length)
     $session.Headers.Add("X-Requested-With", "XMLHttpRequest")
     $session.Headers.Add("Content-Type", "text/xml-external-parsed-entity")
     $session.Headers.Add("Accept-Encoding", "gzip, deflate")
     $session.Headers.Add("Accept-Language", "en-US,en;q=0.9")
-    $null = Invoke-RestMethod -Uri $uri -WebSession $session -Body $prismJson -Method Post
+    $null = Invoke-RestMethod -Uri $uri -WebSession $session -Body $PrismProfile.ToString() -Method Post
 }
