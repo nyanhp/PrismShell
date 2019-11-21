@@ -9,6 +9,10 @@ Install-Module PrismShell -Scope CurrentUser
 Your operating system should not matter. At the moment, I assume that the command ```arp -a``` can be executed. Should you require sudo privileges, start your
 pwsh with sudo. May be streamlined in a future release.
 
+## Current status
+
+[![Build status](https://dev.azure.com/japete/PrismShell/_apis/build/status/PrismShell-CI)](https://dev.azure.com/japete/PrismShell/_build/latest?definitionId=12)
+
 ## Cmdlets
 
 ### Add-PrismProfile
