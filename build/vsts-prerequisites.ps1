@@ -3,7 +3,7 @@
 $modules = @("Pester", "PSFramework", "PSScriptAnalyzer", "PowerShellGet")
 
 foreach ($module in $modules) {
-    Write-Host "Installing $module" -ForegroundColor Cyan
+    "Installing $module"
     Install-Module $module -Force -SkipPublisherCheck -AllowClobber
     Import-Module $module -Force -PassThru
 }
