@@ -12,7 +12,7 @@ param
 # Prepare publish folder
 Write-PSFMessage -Level Important -Message "Creating and populating publishing directory $WorkingDirectory"
 $publishDir = New-Item -Path $WorkingDirectory -Name publish -ItemType Directory
-Copy-Item -Path "$($WorkingDirectory)\PrismShell" -Destination $publishDir.FullName -Recurse -Force
+Copy-Item -Path "$($WorkingDirectory)" -Destination $publishDir.FullName -Recurse -Force
 
 #region Gather text data to compile
 $text = @()
@@ -24,7 +24,7 @@ foreach ($line in (Get-Content "$($PSScriptRoot)\filesBefore.txt" | Where-Object
 {
 	if ([string]::IsNullOrWhiteSpace($line)) { continue }
 	
-	$basePath = Join-Path "$($publishDir.FullName)\PrismShell" $line
+	$basePath = Join-Path "$($publishDir.FullName)" $line
 	foreach ($entry in (Resolve-PSFPath -Path $basePath))
 	{
 		$item = Get-Item $entry
@@ -50,7 +50,7 @@ foreach ($line in (Get-Content "$($PSScriptRoot)\filesAfter.txt" | Where-Object 
 {
 	if ([string]::IsNullOrWhiteSpace($line)) { continue }
 	
-	$basePath = Join-Path "$($publishDir.FullName)\PrismShell" $line
+	$basePath = Join-Path "$($publishDir.FullName)" $line
 	foreach ($entry in (Resolve-PSFPath -Path $basePath))
 	{
 		$item = Get-Item $entry
@@ -78,5 +78,5 @@ if ([string]::IsNullOrWhiteSpace($ApiKey))
 	throw "Why is there no API Key, boy?"
 }
 
-Write-PSFMessage -Level Important -Message "Publishing, $($publishDir.FullName)\PrismShell, API: $(-join $ApiKey[0,1])...$(-join $ApiKey[-2,-1])"
-Publish-Module -Path "$($publishDir.FullName)\PrismShell" -NuGetApiKey $ApiKey -Force -Confirm:$false -Verbose
+Write-PSFMessage -Level Important -Message "Publishing, $($publishDir.FullName), API: $(-join $ApiKey[0,1])...$(-join $ApiKey[-2,-1])"
+Publish-Module -Path "$($publishDir.FullName)" -NuGetApiKey $ApiKey -Force -Confirm:$false -Verbose
