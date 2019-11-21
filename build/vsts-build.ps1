@@ -11,8 +11,8 @@ param
 
 # Prepare publish folder
 Write-PSFMessage -Level Important -Message "Creating and populating publishing directory $WorkingDirectory"
-$publishDir = New-Item -Path $WorkingDirectory -Name publish -ItemType Directory
-Copy-Item -Path "$($WorkingDirectory)" -Destination $publishDir.FullName -Recurse -Force
+$publishDir = New-Item (Join-Path -Path $env:TEMP -ChildPath publish) -ItemType Directory -Force
+Copy-Item -Path "$($WorkingDirectory)" -Destination $publishDir.FullName -Recurse -Force -Exclude .git
 
 #region Gather text data to compile
 $text = @()
