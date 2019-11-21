@@ -12,7 +12,9 @@ param
 # Prepare publish folder
 Write-PSFMessage -Level Important -Message "Creating and populating publishing directory $WorkingDirectory"
 $publishDir = New-Item (Join-Path -Path $env:TEMP -ChildPath publish) -ItemType Directory -Force
-Copy-Item -Path "$($WorkingDirectory)" -Destination $publishDir.FullName -Recurse -Force -Exclude .git
+Copy-Item -Path "$($WorkingDirectory)" -Destination $publishDir.FullName -Recurse -Force -Exclude .git -Verbose
+
+tree $publishDir.FullName | Out-Host
 
 #region Gather text data to compile
 $text = @()
@@ -25,6 +27,7 @@ foreach ($line in (Get-Content "$($PSScriptRoot)\filesBefore.txt" | Where-Object
 	if ([string]::IsNullOrWhiteSpace($line)) { continue }
 	
 	$basePath = Join-Path "$($publishDir.FullName)\PrismShell" $line
+	Write-PSFMessage -Level Important -Message "Processing $basePath"
 	foreach ($entry in (Resolve-PSFPath -Path $basePath))
 	{
 		$item = Get-Item $entry
