@@ -6,15 +6,13 @@ Insert any build steps you may need to take before publishing it here.
 #>
 param
 (
-	$WorkingDirectory = (Resolve-Path "$PSScriptRoot\..").Path
+	$WorkingDirectory = $env:SYSTEM_DEFAULTWORKINGDIRECTORY
 )
 
 # Prepare publish folder
 Write-PSFMessage -Level Important -Message "Creating and populating publishing directory $WorkingDirectory"
-$publishDir = New-Item (Join-Path -Path $env:TEMP -ChildPath publish) -ItemType Directory -Force
-Copy-Item -Path "$($WorkingDirectory)" -Destination $publishDir.FullName -Recurse -Force -Exclude .git -Verbose
-
-tree $publishDir.FullName | Out-Host
+$publishDir = New-Item -Path $WorkingDirectory -Name publish -ItemType Directory
+Copy-Item -Path "$($WorkingDirectory)\PrismShell" -Destination $publishDir.FullName -Recurse -Force
 
 #region Gather text data to compile
 $text = @()
@@ -27,7 +25,6 @@ foreach ($line in (Get-Content "$($PSScriptRoot)\filesBefore.txt" | Where-Object
 	if ([string]::IsNullOrWhiteSpace($line)) { continue }
 	
 	$basePath = Join-Path "$($publishDir.FullName)\PrismShell" $line
-	Write-PSFMessage -Level Important -Message "Processing $basePath"
 	foreach ($entry in (Resolve-PSFPath -Path $basePath))
 	{
 		$item = Get-Item $entry
