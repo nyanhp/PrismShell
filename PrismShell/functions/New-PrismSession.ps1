@@ -19,24 +19,34 @@ function New-PrismSession
     (
         [Parameter()]
         [string]
-        $ComputerName = (Get-PrismPrinter),
+        $ComputerName = (Get-PrismPrinter).IPAddress,
 
         [Parameter()]
         [string]
         $MacAddress
     )
 
-    if ([string]::IsNullOrWhiteSpace($MacAddress))
+    $physAddress = if ([string]::IsNullOrWhiteSpace($MacAddress))
     {
-        (Get-ArpCache -ComputerName $ComputerName -ErrorAction Stop).MacAddress.ToUpper()
-        return
+        try
+        {
+            (Get-ArpCache -ComputerName $ComputerName -ErrorAction Stop).MacAddress.ToUpper()
+        }
+        catch
+        {
+            Stop-PSFFunction -String NewPrismSession.NoMacAddress -StringValues $ComputerName
+        }
+    }
+    else
+    {
+        $MacAddress
     }
 
     Write-PSFMessage -String 'NewPrismSession.CreateAuthCookie' -StringValues $ComputerName, $physAddress
     $cookie = New-Object System.Net.Cookie
     $cookie.name = "Authorization"
     $cookie.path = "/"
-    $cookie.value = $MacAddress
+    $cookie.value = $physAddress
     $cookie.domain = $ComputerName
     $cookie.expires = (Get-Date).AddDays(1)
     $session = New-Object Microsoft.PowerShell.Commands.WebRequestSession

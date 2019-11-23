@@ -16,11 +16,15 @@ function Get-PrismPrinter
     if (-not (Get-PSFConfigValue -FullName PrismShell.AutoDiscovery.Enabled))
     {
         Write-PSFMessage -String 'FindPrismPrinter.AutoDiscoDisabled'
-        return (Get-PSFConfigValue -FullName PrismShell.DefaultPrinter)
+        return [pscustomobject]@{
+            IPAddress = Get-PSFConfigValue -FullName PrismShell.DefaultPrinter.ComputerName
+            MACAddress = Get-PSFConfigValue -FullName PrismShell.DefaultPrinter.MacAddress
+            Type = 'UserDefault'
+        }
     }
 
     Write-PSFMessage -String 'FindPrismPrinter.AutoDiscoEnabled'
-    $filteredArpCache = Get-ArpCache | Where-Object MacAddress -like '00-11-22'
+    $filteredArpCache = Get-ArpCache | Where-Object MacAddress -like '10:00:F7*'
 
     if ($filteredArpCache.Count -eq 0)
     {
