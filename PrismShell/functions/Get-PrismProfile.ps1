@@ -44,7 +44,7 @@ function Get-PrismProfile
     {
         if ($Index -and $i -ne $Index)
         {
-            Write-PSFMessage -String 'GetPrismProfile.FilterIndex' -StringValues $ComputerName, $Index
+            Write-PSFMessage -String 'GetPrismProfile.FilterIndex' -StringValues $ComputerName, $Index, $i
             continue
         }
 
