@@ -1,15 +1,39 @@
-﻿<#
-This is an example configuration file
+﻿# Configure validation
+Register-PSFConfigValidation -Name MacAddressColon -ScriptBlock {
+    param
+    (
+        [string]
+        $MacAddress
+    )
 
-By default, it is enough to have a single one of them,
-however if you have enough configuration settings to justify having multiple copies of it,
-feel totally free to split them into multiple files.
-#>
+    if ([string]::IsNullOrWhiteSpace($MacAddress))
+    {
+        return [PSCustomObject]@{
+            Message = 'Null-value supplied, but allowed'
+            Success = $true
+            Value = $null
+        }
+    }
 
-<#
-# Example Configuration
-Set-PSFConfig -Module 'PrismShell' -Name 'Example.Setting' -Value 10 -Initialize -Validation 'integer' -Handler { } -Description "Example configuration setting. Your module can then use the setting using 'Get-PSFConfigValue'"
-#>
+    $res = $MacAddress -match '^([a-fA-F0-9]{2}:){5}[a-fA-F0-9]{2}$'
+
+    if ($res)
+    {
+        [PSCustomObject]@{
+            Message = '{0} is a valid colon-separated MAC address' -f $MacAddress
+            Success = $true
+            Value = $MacAddress
+        }
+    }
+    else
+    {
+        [PSCustomObject]@{
+            Message = '{0} is not a valid colon-separated MAC address' -f $MacAddress
+            Success = $false
+            Value = $matchedValue
+        }
+    }
+}
 
 Set-PSFConfig -Module 'PrismShell' -Name 'Import.DoDotSource' -Value $false -Initialize -Validation 'bool' -Description "Whether the module files should be dotsourced on import. By default, the files of this module are read as string value and invoked, which is faster but worse on debugging."
 Set-PSFConfig -Module 'PrismShell' -Name 'Import.IndividualFiles' -Value $true -Initialize -Validation 'bool' -Description "Whether the module files should be imported individually. During the module build, all module code is compiled into few files, which are imported instead by default. Loading the compiled versions is faster, using the individual files is easier for debugging and testing out adjustments."
