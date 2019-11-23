@@ -19,7 +19,7 @@ function Suspend-PrismPrint
     (
         [Parameter()]
         [string]
-        $ComputerName = (Get-PrismPrinter),
+        $ComputerName = (Get-PrismPrinter).IPAddress,
 
         [Parameter()]
         [microsoft.powershell.commands.webrequestsession]

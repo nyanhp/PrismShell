@@ -11,6 +11,7 @@
 	'GetPrismFile.FilterName'                = 'Filtering files on {0} by Name with filter {1}.'
 	'GetPrismProfile.FilterIndex'            = 'Index {2} does not match filter profiles on {0} by Index {1}'
 	'NewPrismSession.CreateAuthCookie'       = 'Creating auth cookie for {0} with value {1}'
+	'NewPrismSession.NoMacAddress'           = 'No MAC address found belonging to {0}. Cannot create a cookie.'
 	'RemovePrismFile.Removing'               = 'Attempting to remove {1} on {0}'
 	'ResumePrismPrint.NotResuming'           = 'Not executing Resume. Printer {0} is currently idle'
 	'StartPrismPrint.ProfileMissing'         = 'Printer profile {1} does not exist on {0}. Try "Get-PrismProfile -ComputerName {0}" to see which profiles are available'
