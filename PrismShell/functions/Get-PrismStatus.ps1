@@ -18,7 +18,7 @@ function Get-PrismStatus
     (
         [Parameter()]
         [string]
-        $ComputerName = (Get-PrismPrinter).IPAddress,
+        $ComputerName = (Get-PrismPrinter),
 
         [Parameter()]
         [microsoft.powershell.commands.webrequestsession]
@@ -36,7 +36,7 @@ function Get-PrismStatus
     $status,$complete,$eta = $statusMessage -split ','
 
     [PSCustomObject]@{
-        Status = if ($status -eq 'P') { 'Printing' } elseif ($status -eq 'I') { 'Idle' } else { 'Unknown' }
+        Status = if ($status -eq 'P') { 'Printing' } elseif ($status -eq 'L') { 'Leveling' } elseif ($status -eq 'I') { 'Idle' } else { 'Unknown' }
         Layer = $complete
         TimeRemaining = $eta -as [timespan]
         FileName = $file
