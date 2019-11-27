@@ -87,4 +87,18 @@ Describe "Verifying integrity of module files" {
 			}
 		}
 	}
+
+	Context "Validating strings" {
+		$allFiles, $reference = (Get-ChildItem -Path $moduleRoot -Recurse -File -Filter strings.psd1).Where({$_.DirectoryName -notlike '*en-us'}, 'Split')
+		[string[]]$referenceImport = (Import-PowerShellDataFile -Path $reference.FullName).Keys
+
+		foreach ($file in $allFiles)
+		{
+			[string[]]$fileImport = (Import-PowerShellDataFile -Path $file.FullName).Keys
+
+			It "[$($file.Name)] should have the same keys as en-us reference" {
+				Compare-Object -ReferenceObject $referenceImport -DifferenceObject $fileImport -PassThru | Should -Be $null
+			}
+		}
+	}
 }
