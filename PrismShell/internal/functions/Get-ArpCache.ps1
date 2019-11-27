@@ -38,6 +38,12 @@ function Get-ArpCache
         Write-PSFMessage -String 'GetArpCache.AddingEntry' -StringValues $entry
         $ip, $mac, $type = $entry.Trim() -split '\s+'
 
+        if ($mac -notmatch '^([a-fA-F0-9]{2}-){5}[a-fA-F0-9]{2}$')
+        {
+            Write-PSFMessage -String 'GetArpCache.MalformedMac' -StringValues $entry, $mac
+            continue
+        }
+
         [PSCustomObject]@{
             IPAddress    = $ip
             MACAddress   = ($mac -replace '-',':')

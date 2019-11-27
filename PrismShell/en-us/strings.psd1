@@ -25,4 +25,5 @@
 	'GetArpCache.DnsLookupFailed'            = 'DNS lookup of {0} failed. Cannot reliably filter ARP table for Auth cookie.'
 	'GetArpCache.AddingEntry'                = 'Adding entry {0} to ARP cache result set'
 	'GetArpCache.Filtering'                  = 'Filtering cache result by {0}'
+	'GetArpCache.MalformedMac'               = 'Malformed MAC in entry {0}, {1}'
 }

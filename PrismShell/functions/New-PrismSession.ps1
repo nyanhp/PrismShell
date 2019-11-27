@@ -30,7 +30,7 @@ function New-PrismSession
     {
         try
         {
-            (Get-ArpCache -ComputerName $ComputerName -ErrorAction Stop).MacAddress.ToUpper()
+            (Get-ArpCache -ComputerName $ComputerName -ErrorAction Stop)[0].MacAddress.ToUpper()
         }
         catch
         {
