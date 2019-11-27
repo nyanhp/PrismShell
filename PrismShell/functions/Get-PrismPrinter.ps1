@@ -38,8 +38,17 @@ function Get-PrismPrinter
 
     if (Get-PSFConfigValue -FullName PrismShell.AutoDiscovery.UseFirstPrinter)
     {
-        return ($filteredArpCache | Select-Object -First 1)
+        $filteredArpCache = $filteredArpCache | Select-Object -First 1
     }
 
-    $filteredArpCache
+    foreach ($entry in $filteredArpCache)
+    {
+        $uri = 'http://{0}/version' -f $entry.IPAddress
+        $session = New-PrismSession -ComputerName $entry.IPAddress -MacAddress $entry.MacAddress.ToUpper()
+        $version = (Invoke-RestMethod -Uri $uri -Method Get -WebSession $session) -as [version]
+
+        if ($null -eq $version) {$version = [version]::new()}
+
+        [PrismPrinter]::new($entry.IPAddress, $entry.MACAddress.ToUpper(), $version)
+    }
 }
