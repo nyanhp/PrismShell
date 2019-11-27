@@ -33,12 +33,27 @@ function Get-PrismStatus
     }
 
     $statusMessage, $file = (Invoke-RestMethod -Uri $uri -Method Get -WebSession $Session) -split '\s+'
-    $status,$complete,$eta = $statusMessage -split ','
+    $status, $complete, $eta = $statusMessage -split ','
 
     [PSCustomObject]@{
-        Status = if ($status -eq 'P') { 'Printing' } elseif ($status -eq 'L') { 'Leveling' } elseif ($status -eq 'I') { 'Idle' } else { 'Unknown' }
-        Layer = $complete
+        Status        = if ($status -eq 'P')
+        {
+            'Printing'
+        }
+        elseif ($status -eq 'L')
+        {
+            'Leveling'
+        }
+        elseif ($status -eq 'I')
+        {
+            'Idle'
+        }
+        else
+        {
+            'Unknown (printer status indicator was {0})' -f $status
+        }
+        Layer         = $complete
         TimeRemaining = $eta -as [timespan]
-        FileName = $file
+        FileName      = $file
     }
 }

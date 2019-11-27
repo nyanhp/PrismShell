@@ -1,0 +1,31 @@
+﻿TOPIC
+	about_PrismShell
+	
+SHORT DESCRIPTION
+	Interact with your Beam Prism 3D printer
+
+LONG DESCRIPTION
+	This little module helps you interacting with your Prism printer.
+
+	To get started, try to list the files and profiles:
+
+	Get-PrismFile -ComputerName 192.168.2.11
+	Get-PrismStatus -ComputerName 192.168.2.11
+	Get-PrismProfile -ComputerName 192.168.2.11
+
+	To start a new print, use Start-PrismPrint
+
+	Start-PrismPrint -ComputerName 192.168.2.11 -Name (Get-PrismFile -ComputerName 192.168.2.11 | Where Name -eq 'Pig3.cws' ).Name -Index 1
+
+	Tired of typing your printer IP? You can use Auto-Discovery:
+
+	Enable-PrismAutodiscovery
+
+	If that doesn't float your boat, simply add it as a default:
+
+	Set-PrismDefaultPrinter -ComputerName YourPrinterDnsOrIp -MacAddress aa:bb:cc:dd:ee:ff
+
+	Pro-Tip: Ping your printer once, and try auto-discovery. We are using the ARP table.
+	
+KEYWORDS
+	3D beam prism printing

@@ -3,7 +3,7 @@
 	RootModule           = 'PrismShell.psm1'
 
 	# Version number of this module.
-	ModuleVersion        = '1.4.2'
+	ModuleVersion        = '1.4.3'
 
 	# ID used to uniquely identify this module
 	GUID                 = '591c2651-a50b-4d31-9398-7031bf9ae7da'
