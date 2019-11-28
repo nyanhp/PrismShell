@@ -12,6 +12,10 @@
     The file name to print
 .PARAMETER Index
     The resin profile to print with, e.g. Get-PrismProfile
+.PARAMETER Wait
+    Indicates that the cmdlet will wait until the print is finished.
+.PARAMETER AsJob
+    Returns a Job object that waits in the background for the print to finish, or until you close PowerShell
 .EXAMPLE
     Start-PrismPrint -Index 2 -Name MAD5A.cddlp
 

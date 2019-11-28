@@ -1,4 +1,16 @@
-﻿function Show-PrismToast
+﻿<#
+.SYNOPSIS
+    Display toast message
+.DESCRIPTION
+    Display toast message
+.PARAMETER Message
+    The message to display
+.EXAMPLE
+    Show-PrismToast -Message ((Get-PSFLocalizedString -Module PrismShell -Name StartPrismPrint.PrintFinished) -f $ComputerName, $Name)
+
+    Displays a toast message if the printer is done
+#>
+function Show-PrismToast
 {
     param
     (
