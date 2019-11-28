@@ -17,6 +17,8 @@
 	'StartPrismPrint.ProfileMissing'         = 'Printer profile {1} does not exist on {0}. Try "Get-PrismProfile -ComputerName {0}" to see which profiles are available'
 	'StartPrismPrint.FileNotFound'           = 'File {1} does not exist on SD card in {0}. The following files were found: {2}'
 	'StartPrismPrint.Starting'               = 'Printing {1} on {0} with profile ID {2}'
+	'StartPrismPrint.WaitingForGodot'        = 'Waiting for {1} to finish printing on {0}'
+	'StartPrismPrint.PrintFinished'          = '{1} successfully printed on {0}!'
 	'StopPrismPrint.NotStopping'             = 'Not executing cancellation. Printer {0} is currently idle'
 	'StopPrismPrint.AttemptStop'             = 'Attempting to cancel active print on {0}'
 	'SuspendPrismPrint.NotSuspending'        = 'Not executing pause. Printer {0} is currently idle'

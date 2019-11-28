@@ -37,7 +37,15 @@ function Start-PrismPrint
         [Parameter(Mandatory)]
         [ValidateRange(1, 7)]
         [uint16]
-        $Index
+        $Index,
+
+        [Parameter(ParameterSetName = 'Wait')]
+        [switch]
+        $Wait,
+
+        [Parameter(ParameterSetName = 'WaitJob')]
+        [switch]
+        $AsJob
     )
 
     $uri = "http://$ComputerName/CMD/Print{0}{1}"
@@ -58,4 +66,32 @@ function Start-PrismPrint
 
     Write-PSFMessage -String 'StartPrismPrint.Starting' -StringValues $ComputerName, $Name, $Index
     $null = Invoke-RestMethod -Uri ($uri -f $Index, $Name) -Method Get -WebSession $Session
+
+    if ($Wait.IsPresent)
+    {
+        while ((Get-PrismStatus).Status -in 'Leveling','Printing')
+        {
+            Start-Sleep -Seconds 30
+            Write-PSFMessage -String StartPrismPrint.WaitingForGodot -StringValues $ComputerName, $Name
+        }
+
+        Show-PrismToast -Message ((Get-PSFLocalizedString -Module PrismShell -Name StartPrismPrint.PrintFinished) -f $ComputerName, $Name)
+    }
+
+    if ($AsJob.IsPresent)
+    {
+        Start-Job -Name ('{0}_{1}' -f $ComputerName, $Name) -ArgumentList $ComputerName,(Get-PrismPrinter).MacAddress -ScriptBlock {
+            param($IP, $MAC)
+
+            $printerSession = New-PrismSession -ComputerName $IP -MacAddress $MAC
+
+            while ((Get-PrismStatus -ComputerName $IP -Session $printerSession).Status -in 'Leveling','Printing')
+            {
+                Start-Sleep -Seconds 30
+                Write-PSFMessage -String StartPrismPrint.WaitingForGodot -StringValues $ComputerName, $Name
+            }
+
+            Show-PrismToast -Message ((Get-PSFLocalizedString -Module PrismShell -Name StartPrismPrint.PrintFinished) -f $ComputerName, $Name)
+        }
+    }
 }
