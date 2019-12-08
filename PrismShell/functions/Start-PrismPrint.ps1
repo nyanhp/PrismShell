@@ -1,5 +1,4 @@
-﻿
-<#
+﻿<#
 .SYNOPSIS
     Start a print on your Prism!
 .DESCRIPTION

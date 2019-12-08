@@ -3,7 +3,7 @@
 	RootModule           = 'PrismShell.psm1'
 
 	# Version number of this module.
-	ModuleVersion        = '1.5.1'
+	ModuleVersion        = '1.6.0'
 
 	# ID used to uniquely identify this module
 	GUID                 = '591c2651-a50b-4d31-9398-7031bf9ae7da'
@@ -42,7 +42,9 @@
 		'Set-PrismDefaultPrinter',
 		'Start-PrismPrint',
 		'Stop-PrismPrint',
-		'Suspend-PrismPrint'
+		'Suspend-PrismPrint',
+		'Get-PrismSetting',
+		'Set-PrismSetting'
 	)
 
 	RequiredModules      = @(

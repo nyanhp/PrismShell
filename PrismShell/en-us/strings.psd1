@@ -23,6 +23,7 @@
 	'StopPrismPrint.AttemptStop'             = 'Attempting to cancel active print on {0}'
 	'SuspendPrismPrint.NotSuspending'        = 'Not executing pause. Printer {0} is currently idle'
 	'SuspendPrismPrint.AttemptPause'         = 'Attempting to pause print on {0}'
+	'SetPrismSetting.SettingApplied'         = 'Applying the following settings on {0}:`r`n{1}'
 
 	'GetArpCache.DnsLookupFailed'            = 'DNS lookup of {0} failed. Cannot reliably filter ARP table for Auth cookie.'
 	'GetArpCache.AddingEntry'                = 'Adding entry {0} to ARP cache result set'
