@@ -23,6 +23,7 @@
 	'StopPrismPrint.AttemptStop'             = 'Versuche aktiven Druck auf {0} abzubrechen.'
 	'SuspendPrismPrint.NotSuspending'        = 'Konnte Druck nicht pausieren. Drucker {0} ist gerade Idle'
 	'SuspendPrismPrint.AttemptPause'         = 'Versuche aktiven Druck auf {0} zu pausieren'
+	'SetPrismSetting.SettingApplied'         = 'Wende die folgenden Einstellungen auf {0} an:`r`n{1}'
 
 	'GetArpCache.DnsLookupFailed'            = 'DNS lookup von {0} fehlgeschlagen. Kann die ARP-Tabelle nicht zuverlässig filtern, um Auth cookie zu erstellen.'
 	'GetArpCache.AddingEntry'                = 'Füge Eintrag {0} zum ARP cache hinzu'
