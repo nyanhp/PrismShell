@@ -18,7 +18,7 @@
 #>
 function Get-PrismProfile
 {
-    [CmdletBinding()]
+    [CmdletBinding(DefaultParameterSetName = 'Id')]
     param
     (
         [Parameter()]
@@ -56,7 +56,7 @@ function Get-PrismProfile
 
         $profileData = Invoke-RestMethod -Uri ($uri -f $i) -Method Get -WebSession $Session
 
-        if ($null -ne $Name -and $profileData.Material -ne $Name)
+        if (-not [string]::IsNullOrWhiteSpace($Name) -and $profileData.Material -ne $Name)
         {
             continue
         }

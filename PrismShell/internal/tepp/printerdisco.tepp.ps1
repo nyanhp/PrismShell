@@ -4,4 +4,4 @@ Register-PSFTeppScriptblock -Name "PrismShell.alcohol" -ScriptBlock { 'Beer','Me
 #>
 
 Register-PSFTeppScriptblock -Name 'PrismShell.Printers' -ScriptBlock { (Get-PrismPrinter).IpAddress }
-Register-PSFTeppScriptblock -Name 'PrismShell.ResinName' -ScriptBlock { (Get-PrismProfile).Name}
+Register-PSFTeppScriptblock -Name 'PrismShell.ResinName' -ScriptBlock { (Get-PrismProfile).Material}
