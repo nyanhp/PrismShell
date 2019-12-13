@@ -9,6 +9,8 @@
     The session to your Prism, autocreated if not provided
 .PARAMETER Index
     Integer-based index between 1 and 7 that you want to retrieve
+.PARAMETER Name
+    Resin name
 .EXAMPLE
     Get-PrismProfile
 
@@ -27,10 +29,14 @@ function Get-PrismProfile
         [microsoft.powershell.commands.webrequestsession]
         $Session,
 
-        [Parameter()]
-        [ValidateRange(1,7)]
+        [Parameter(ParameterSetName = 'Id')]
+        [ValidateRange(1, 7)]
         [uint16]
-        $Index
+        $Index,
+
+        [Parameter(ParameterSetName = 'Name')]
+        [string]
+        $Name
     )
 
     $uri = "http://$ComputerName/user/{0}.conf"
@@ -49,7 +55,16 @@ function Get-PrismProfile
         }
 
         $profileData = Invoke-RestMethod -Uri ($uri -f $i) -Method Get -WebSession $Session
-        if ($profileData -is [System.String]) { continue }
+
+        if ($null -ne $Name -and $profileData.Material -ne $Name)
+        {
+            continue
+        }
+
+        if ($profileData -is [System.String])
+        {
+            continue
+        }
 
         $profileData
     }
