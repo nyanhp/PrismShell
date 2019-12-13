@@ -15,6 +15,8 @@
     Indicates that the cmdlet will wait until the print is finished.
 .PARAMETER AsJob
     Returns a Job object that waits in the background for the print to finish, or until you close PowerShell
+.PARAMETER ResinProfileName
+    Use a named profile to print with, e.g. Get-PrismProfile
 .EXAMPLE
     Start-PrismPrint -Index 2 -Name MAD5A.cddlp
 
@@ -37,7 +39,7 @@ function Start-PrismPrint
         [string]
         $Name,
 
-        [Parameter(Mandatory)]
+        [Parameter(Mandatory, ParameterSetName = 'Id')]
         [ValidateRange(1, 7)]
         [uint16]
         $Index,
@@ -48,7 +50,12 @@ function Start-PrismPrint
 
         [Parameter(ParameterSetName = 'WaitJob')]
         [switch]
-        $AsJob
+        $AsJob,
+        
+        [Parameter(Mandatory, ParameterSetName = 'Name')]
+        [ValidateRange(1, 7)]
+        [uint16]
+        $ResinProfileName
     )
 
     $uri = "http://$ComputerName/CMD/Print{0}{1}"
@@ -57,7 +64,16 @@ function Start-PrismPrint
         $Session = New-PrismSession -ComputerName $ComputerName
     }
 
-    if ($null -eq (Get-PrismProfile -ComputerName $ComputerName -Session $Session -Index $Index))
+    $resin = if ($PSCmdlet.ParameterSetName -eq 'Name')
+    {
+        Get-PrismProfile -ComputerName $ComputerName -Session $Session -Name $ResinProfileName
+    }
+    else
+    {
+        Get-PrismProfile -ComputerName $ComputerName -Session $Session -Index $Index
+    }
+
+    if ($null -eq $resin)
     {
         Stop-PSFFunction -String 'StartPrismPrint.ProfileMissing' -StringValues $ComputerName, $Index
     }
@@ -67,8 +83,8 @@ function Start-PrismPrint
         Stop-PSFFunction -String 'StartPrismPrint.FileNotFound' -StringValues $ComputerName, $Name, $((Get-PrismFile -ComputerName $ComputerName -Session $Session).Name -join ',')
     }
 
-    Write-PSFMessage -String 'StartPrismPrint.Starting' -StringValues $ComputerName, $Name, $Index
-    $null = Invoke-RestMethod -Uri ($uri -f $Index, $Name) -Method Get -WebSession $Session
+    Write-PSFMessage -String 'StartPrismPrint.Starting' -StringValues $ComputerName, $Name, $resin.Index, $resin.Material
+    $null = Invoke-RestMethod -Uri ($uri -f $resin.Index, $Name) -Method Get -WebSession $Session
 
     if ($Wait.IsPresent)
     {
@@ -79,6 +95,7 @@ function Start-PrismPrint
         }
 
         Show-PrismToast -Message ((Get-PSFLocalizedString -Module PrismShell -Name StartPrismPrint.PrintFinished) -f $ComputerName, $Name)
+        return
     }
 
     if ($AsJob.IsPresent)
