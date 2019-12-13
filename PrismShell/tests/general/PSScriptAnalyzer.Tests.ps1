@@ -13,12 +13,12 @@ $list = New-Object System.Collections.ArrayList
 
 Describe 'Invoking PSScriptAnalyzer against commandbase' {
 	$commandFiles = Get-ChildItem -Path $CommandPath -Recurse | Where-Object Name -like "*.ps1"
-	$scriptAnalyzerRules = Get-ScriptAnalyzerRule | Where-Object -Property RuleName -ne PSUseShouldProcessForStateChangingFunctions
+	$scriptAnalyzerRules = Get-ScriptAnalyzerRule
 
 	foreach ($file in $commandFiles)
 	{
 		Context "Analyzing $($file.BaseName)" {
-			$analysis = Invoke-ScriptAnalyzer -Path $file.FullName -ExcludeRule PSAvoidTrailingWhitespace, PSShouldProcess
+			$analysis = Invoke-ScriptAnalyzer -Path $file.FullName -ExcludeRule PSAvoidTrailingWhitespace, PSShouldProcess,PSUseShouldProcessForStateChangingFunctions,PSUseOutputTypeCorrectly
 
 			forEach ($rule in $scriptAnalyzerRules)
 			{

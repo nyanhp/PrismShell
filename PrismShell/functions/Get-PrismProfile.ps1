@@ -66,6 +66,6 @@ function Get-PrismProfile
             continue
         }
 
-        $profileData
+        [PrismProfile] ($profileData | Add-Member -MemberType NoteProperty -Name Index -Value $i -PassThru)
     }
 }

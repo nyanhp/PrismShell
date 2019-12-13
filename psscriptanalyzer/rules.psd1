@@ -1,5 +1,5 @@
 ﻿@{
-    ExcludeRules = @('PSUseShouldProcessForStateChangingFunctions')
+    ExcludeRules = @('PSUseShouldProcessForStateChangingFunctions', 'PSUseOutputTypeCorrectly')
     Rules        = @{
         PSUseCompatibleCommmands = @{
             Enable = $true

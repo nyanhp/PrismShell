@@ -29,4 +29,5 @@
 	'GetArpCache.AddingEntry'                = 'Füge Eintrag {0} zum ARP cache hinzu'
 	'GetArpCache.Filtering'                  = 'Filtere cache nach {0}'
 	'GetArpCache.MalformedMac'               = 'Unpassende MAC in Eintrag {0}, {1}'
+	'ShowPrismThumbnail.WindowsOnly'         = 'Vorschau ist aktuell nur unter Windows PowerShell möglich'
 }
