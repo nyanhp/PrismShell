@@ -1,4 +1,16 @@
-﻿function Show-PrismThumbnail
+﻿<#
+.SYNOPSIS
+    Display a thumbnail
+.DESCRIPTION
+    Display a thumbnail of the running print
+.PARAMETER Path
+    Thumbnail path
+.EXAMPLE
+    Show-PrismThumbnail ./bla.jpg
+
+    Display a thumbnail
+#>
+function Show-PrismThumbnail
 {
     param
     (

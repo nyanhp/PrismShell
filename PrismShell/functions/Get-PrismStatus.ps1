@@ -7,6 +7,8 @@
     The host name or IP of your Prism
 .PARAMETER Session
     The session to your Prism, autocreated if not provided
+.PARAMETER Thumbnail
+    Show thumbnail when retrieving status
 .EXAMPLE
     Get-PrismStatus
 
