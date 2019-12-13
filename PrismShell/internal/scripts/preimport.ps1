@@ -9,11 +9,11 @@ class PrismProfile
     #{"Material":" ","BaseCureTime": ,"CureTime": ,"RaiseDistance": }
     [string] $Material
 
-    [uint16] $BaseCureTime
+    [nullable[uint16]] $BaseCureTime
 
-    [uint16] $CureTime
+    [nullable[uint16]] $CureTime
 
-    [uint16] $RaiseDistance
+    [nullable[uint16]] $RaiseDistance
 
     PrismProfile ()
     {
