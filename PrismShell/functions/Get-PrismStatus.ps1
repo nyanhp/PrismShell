@@ -47,7 +47,7 @@ function Get-PrismStatus
         $null = Invoke-RestMethod -WebSession $Session -Uri $thumbnailUri -Method Get -OutFile $tmp
         Show-PrismThumbnail -Path $tmp
     }
-
+write-verbose $status
     [PSCustomObject]@{
         Status        = if ($status -eq 'P')
         {
@@ -56,6 +56,10 @@ function Get-PrismStatus
         elseif ($status -eq 'L')
         {
             'Leveling'
+        }
+        elseif ($status -eq 'H')
+        {
+            'Homing'
         }
         elseif ($status -eq 'I')
         {
