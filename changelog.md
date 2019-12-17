@@ -1,4 +1,8 @@
 ﻿# Changelog
+## 1.6.1 (2019-12-17)
+
+- New release
+
 ## 1.3.0 (2019-11-18)
 
 - Implemented PSFramework
